@@ -5,9 +5,13 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ManyFabrics", "ManyFabrics\ManyFabrics.sfproj", "{D482E599-0ABF-4131-A943-24F50DDC3BD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStateless", "WebStateless\WebStateless.csproj", "{A95C1EBE-D644-4992-9CD9-75662A3AC834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStateless", "WebStateless\WebStateless.csproj", "{A95C1EBE-D644-4992-9CD9-75662A3AC834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{21ED59A2-99E7-4D0D-84D0-27CB7BA9B5A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{21ED59A2-99E7-4D0D-84D0-27CB7BA9B5A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStateActor", "SimpleStateActor\SimpleStateActor.csproj", "{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStateActor.Interfaces", "SimpleStateActor.Interfaces\SimpleStateActor.Interfaces.csproj", "{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,22 @@ Global
 		{21ED59A2-99E7-4D0D-84D0-27CB7BA9B5A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{21ED59A2-99E7-4D0D-84D0-27CB7BA9B5A6}.Release|x64.ActiveCfg = Release|Any CPU
 		{21ED59A2-99E7-4D0D-84D0-27CB7BA9B5A6}.Release|x64.Build.0 = Release|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Debug|x64.Build.0 = Debug|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}.Release|x64.Build.0 = Release|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Debug|x64.Build.0 = Debug|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Release|x64.ActiveCfg = Release|Any CPU
+		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,10 +3,16 @@
   <Parameters>
     <Parameter Name="WebStateless_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
     <Parameter Name="WebStateless_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="SimpleStateActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="SimpleStateActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="SimpleStateActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="SimpleStateActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="WebStatelessPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
@@ -24,6 +30,11 @@
       <StatelessService ServiceTypeName="WebStatelessType" InstanceCount="[WebStateless_InstanceCount]">
         <SingletonPartition />
       </StatelessService>
+    </Service>
+    <Service Name="SimpleStateActorService" GeneratedIdRef="277ddfaa-6f4c-49e9-b17a-e650cca3ab3d|Persisted">
+      <StatefulService ServiceTypeName="SimpleStateActorServiceType" TargetReplicaSetSize="[SimpleStateActorService_TargetReplicaSetSize]" MinReplicaSetSize="[SimpleStateActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[SimpleStateActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
     </Service>
   </DefaultServices>
 </ApplicationManifest>

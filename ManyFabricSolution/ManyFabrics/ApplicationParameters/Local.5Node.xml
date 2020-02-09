@@ -3,5 +3,6 @@
   <Parameters>
     <Parameter Name="WebStateless_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="WebStateless_InstanceCount" Value="1" />
+    <Parameter Name="SimpleStateActorService_PartitionCount" Value="1" />
   </Parameters>
 </Application>
