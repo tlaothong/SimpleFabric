@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Remoting.FabricTransport;
 using Microsoft.ServiceFabric.Services.Remoting;
+using SharedModels;
 
 [assembly: FabricTransportActorRemotingProvider(RemotingListenerVersion = RemotingListenerVersion.V2_1, RemotingClientVersion = RemotingClientVersion.V2_1)]
 namespace SimpleStateActor.Interfaces
@@ -16,17 +17,10 @@ namespace SimpleStateActor.Interfaces
     /// </summary>
     public interface ISimpleStateActor : IActor
     {
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> GetCountAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<SimpleItem>> ListItemsAsync(CancellationToken cancellationToken);
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task SetCountAsync(int count, CancellationToken cancellationToken);
+        Task<SimpleItem> GetItemAsync(string id);
+
+        Task AddItemAsync(SimpleItem item);
     }
 }

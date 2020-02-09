@@ -7,26 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
+using Microsoft.ServiceFabric.Services.Client;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
 using SharedModels;
 using SimpleStateActor.Interfaces;
 using WebStateless.Models;
 
 namespace WebStateless.Controllers
 {
-    public class SimpleItemsController : Controller
+    public class StateSvcController : Controller
     {
-        private ISimpleStateActor stateActor;
-        public SimpleItemsController()
+        private ISimpleStatefulService stateActor;
+        public StateSvcController()
         {
-            stateActor = ActorProxy.Create<ISimpleStateActor>(new ActorId("mysimpleactor"),
-                new Uri("fabric:/ManyFabrics/SimpleStateActorService"));
+            stateActor = ServiceProxy.Create<ISimpleStatefulService>(
+                new Uri("fabric:/ManyFabrics/SimpleStatefulService"), new ServicePartitionKey(1));
         }
 
         // GET: SimpleItems
         public async Task<IActionResult> Index()
         {
             //return View(await _context.SimpleItems.ToListAsync());
-            var items = await stateActor.ListItemsAsync(CancellationToken.None);
+            var items = await stateActor.ListItemsAsync();
             return View(items);
         }
 

@@ -9,6 +9,7 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using SimpleStateActor.Interfaces;
+using SharedModels;
 
 namespace SimpleStatefulService
 {
@@ -20,6 +21,50 @@ namespace SimpleStatefulService
         public SimpleStatefulService(StatefulServiceContext context)
             : base(context)
         { }
+
+        public async Task AddItemAsync(SimpleItem item)
+        {
+            var sm = this.StateManager;
+            var items = await sm.GetOrAddAsync<IReliableDictionary<string, List<SimpleItem>>>("items");
+            using (var tx = sm.CreateTransaction())
+            {
+                var listItems = await items.TryGetValueAsync(tx, "items");
+                var list = listItems.HasValue ? listItems.Value : new List<SimpleItem>();
+                list.Add(item);
+                await items.AddOrUpdateAsync(tx, "items", _ => list, (k, _) => list);
+                await tx.CommitAsync();
+            }
+        }
+
+        public async Task<SimpleItem> GetItemAsync(string id)
+        {
+            var sm = this.StateManager;
+            var items = await sm.GetOrAddAsync<IReliableDictionary<string, List<SimpleItem>>>("items");
+            List<SimpleItem> list;
+            using (var tx = sm.CreateTransaction())
+            {
+                var listItems = await items.TryGetValueAsync(tx, "items");
+                list = listItems.HasValue ? listItems.Value : new List<SimpleItem>();
+                await tx.CommitAsync();
+            }
+
+            return list.Find(it => it.Id == id);
+        }
+
+        public async Task<IEnumerable<SimpleItem>> ListItemsAsync()
+        {
+            var sm = this.StateManager;
+            var items = await sm.GetOrAddAsync<IReliableDictionary<string, List<SimpleItem>>>("items");
+            List<SimpleItem> list;
+            using (var tx = sm.CreateTransaction())
+            {
+                var listItems = await items.TryGetValueAsync(tx, "items");
+                list = listItems.HasValue ? listItems.Value : new List<SimpleItem>();
+                await tx.CommitAsync();
+            }
+
+            return list;
+        }
 
         /// <summary>
         /// Optional override to create listeners (e.g., HTTP, Service Remoting, WCF, etc.) for this service replica to handle client or user requests.
