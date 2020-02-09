@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+using SimpleStateActor.Interfaces;
 
 namespace SimpleStatefulService
 {
     /// <summary>
     /// An instance of this class is created for each service replica by the Service Fabric runtime.
     /// </summary>
-    internal sealed class SimpleStatefulService : StatefulService
+    internal sealed class SimpleStatefulService : StatefulService, ISimpleStatefulService
     {
         public SimpleStatefulService(StatefulServiceContext context)
             : base(context)
@@ -28,7 +30,7 @@ namespace SimpleStatefulService
         /// <returns>A collection of listeners.</returns>
         protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
         {
-            return new ServiceReplicaListener[0];
+            return this.CreateServiceRemotingReplicaListeners();
         }
 
         /// <summary>

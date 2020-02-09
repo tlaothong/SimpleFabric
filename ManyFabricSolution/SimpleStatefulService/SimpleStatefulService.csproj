@@ -10,7 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="4.0.457" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="4.0.466" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="4.0.466" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleStateActor.Interfaces\SimpleStateActor.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
