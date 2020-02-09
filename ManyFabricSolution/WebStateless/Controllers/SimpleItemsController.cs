@@ -19,7 +19,7 @@ namespace WebStateless.Controllers
         public SimpleItemsController()
         {
             stateActor = ActorProxy.Create<ISimpleStateActor>(new ActorId("mysimpleactor"),
-                new Uri("fabric://ManyFabrics/SimpleStateActorService"));
+                new Uri("fabric:/ManyFabrics/SimpleStateActorService"));
         }
 
         // GET: SimpleItems

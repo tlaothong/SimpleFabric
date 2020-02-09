@@ -21,7 +21,7 @@ namespace WebStateless.Controllers
         public StateSvcController()
         {
             stateActor = ServiceProxy.Create<ISimpleStatefulService>(
-                new Uri("fabric://ManyFabrics/SimpleStatefulService"), new ServicePartitionKey(1));
+                new Uri("fabric:/ManyFabrics/SimpleStatefulService"), new ServicePartitionKey(1));
         }
 
         // GET: SimpleItems
