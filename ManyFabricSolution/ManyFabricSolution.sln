@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStateless", "WebStateles
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{21ED59A2-99E7-4D0D-84D0-27CB7BA9B5A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStateActor", "SimpleStateActor\SimpleStateActor.csproj", "{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStateActor", "SimpleStateActor\SimpleStateActor.csproj", "{DC3A70DE-0D88-4C81-BBBA-E2A87319A6B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStateActor.Interfaces", "SimpleStateActor.Interfaces\SimpleStateActor.Interfaces.csproj", "{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStateActor.Interfaces", "SimpleStateActor.Interfaces\SimpleStateActor.Interfaces.csproj", "{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStatefulService", "SimpleStatefulService\SimpleStatefulService.csproj", "{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,14 @@ Global
 		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Release|x64.ActiveCfg = Release|Any CPU
 		{5D064C7D-A3C0-4919-A3E5-6D1E98A9E62D}.Release|x64.Build.0 = Release|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Debug|x64.Build.0 = Debug|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Release|x64.ActiveCfg = Release|Any CPU
+		{22D0D2F7-4CD1-4DCE-AE8E-BFA2CDB94B6A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
