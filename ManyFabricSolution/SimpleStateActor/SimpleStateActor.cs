@@ -7,6 +7,7 @@ using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Actors.Client;
 using SimpleStateActor.Interfaces;
+using SharedModels;
 
 namespace SimpleStateActor
 {
@@ -31,6 +32,34 @@ namespace SimpleStateActor
         {
         }
 
+        public async Task AddItemAsync(SimpleItem item)
+        {
+            var sm = this.StateManager;
+
+            var items = await sm.TryGetStateAsync<List<SimpleItem>>("items");
+            var listOfItems = items.HasValue ? items.Value : new List<SimpleItem>();
+            listOfItems.Add(item);
+            await sm.AddOrUpdateStateAsync("items", listOfItems, (stName, _) => listOfItems);
+        }
+
+        public async Task<SimpleItem> GetItemAsync(string id)
+        {
+            var sm = this.StateManager;
+            var items = await sm.TryGetStateAsync<List<SimpleItem>>("items");
+            if (items.HasValue)
+            {
+                return items.Value.Find(it => it.Id == id);
+            }
+            return null;
+        }
+
+        public async Task<IEnumerable<SimpleItem>> ListItemsAsync(CancellationToken cancellationToken)
+        {
+            var sm = this.StateManager;
+            var items = await sm.TryGetStateAsync<List<SimpleItem>>("items");
+            return items.HasValue ? items.Value : new List<SimpleItem>();
+        }
+
         /// <summary>
         /// This method is called whenever an actor is activated.
         /// An actor is activated the first time any of its methods are invoked.
@@ -45,27 +74,6 @@ namespace SimpleStateActor
             // For more information, see https://aka.ms/servicefabricactorsstateserialization
 
             return this.StateManager.TryAddStateAsync("count", 0);
-        }
-
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> ISimpleStateActor.GetCountAsync(CancellationToken cancellationToken)
-        {
-            return this.StateManager.GetStateAsync<int>("count", cancellationToken);
-        }
-
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task ISimpleStateActor.SetCountAsync(int count, CancellationToken cancellationToken)
-        {
-            // Requests are not guaranteed to be processed in order nor at most once.
-            // The update function here verifies that the incoming count is greater than the current count to preserve order.
-            return this.StateManager.AddOrUpdateStateAsync("count", count, (key, value) => count > value ? count : value, cancellationToken);
         }
     }
 }

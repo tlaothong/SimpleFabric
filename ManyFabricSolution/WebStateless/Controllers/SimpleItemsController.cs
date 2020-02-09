@@ -1,30 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Client;
 using SharedModels;
+using SimpleStateActor.Interfaces;
 using WebStateless.Models;
 
 namespace WebStateless.Controllers
 {
     public class SimpleItemsController : Controller
     {
+        private ISimpleStateActor stateActor;
         public SimpleItemsController()
         {
+            stateActor = ActorProxy.Create<ISimpleStateActor>(new ActorId("mysimpleactor"),
+                new Uri("fabric://ManyFabrics/SimpleStateActorService"));
         }
 
         // GET: SimpleItems
         public async Task<IActionResult> Index()
         {
             //return View(await _context.SimpleItems.ToListAsync());
-            var items = Enumerable.Range(1, 9).Select(it => new SimpleItem
-            {
-                Id = it.ToString(),
-                Name = $"Item {it}",
-                Number = it,
-            }).ToList();
+            var items = await stateActor.ListItemsAsync(CancellationToken.None);
             return View(items);
         }
 
@@ -36,12 +38,7 @@ namespace WebStateless.Controllers
                 return NotFound();
             }
 
-            var simpleItem = new SimpleItem
-            {
-                Id = 1.ToString(),
-                Name = "Item details",
-                Number = 1,
-            };
+            var simpleItem = await stateActor.GetItemAsync(id);
 
             if (simpleItem == null)
             {
@@ -64,6 +61,11 @@ namespace WebStateless.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Number")] SimpleItem simpleItem)
         {
+            if (ModelState.IsValid)
+            {
+                await stateActor.AddItemAsync(simpleItem);
+                return RedirectToAction(nameof(Index));
+            }
             //if (ModelState.IsValid)
             //{
             //    _context.Add(simpleItem);
