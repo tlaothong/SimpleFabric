@@ -8,6 +8,8 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using SimpleStateActor.Interfaces;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+using Flurl;
+using Flurl.Http;
 
 namespace SimpleStatelessService
 {
@@ -19,6 +21,13 @@ namespace SimpleStatelessService
         public SimpleStatelessService(StatelessServiceContext context)
             : base(context)
         { }
+
+        public Task<string> GetWebVar(string varName)
+        {
+            var baseUrl = "http://localhost:8686/";
+            return baseUrl.AppendPathSegment(new { varName = varName })
+                .GetStringAsync();
+        }
 
         /// <summary>
         /// Optional override to create listeners (e.g., TCP, HTTP) for this service replica to handle client or user requests.

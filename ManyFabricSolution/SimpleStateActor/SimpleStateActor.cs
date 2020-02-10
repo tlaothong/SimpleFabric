@@ -8,6 +8,8 @@ using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Actors.Client;
 using SimpleStateActor.Interfaces;
 using SharedModels;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Microsoft.ServiceFabric.Services.Client;
 
 namespace SimpleStateActor
 {
@@ -22,6 +24,11 @@ namespace SimpleStateActor
     [StatePersistence(StatePersistence.Persisted)]
     internal class SimpleStateActor : Actor, ISimpleStateActor
     {
+        protected ISimpleStatefulService StatefulService =>
+            ServiceProxy.Create<ISimpleStatefulService>(new Uri("fabric:/ManyFabrics/SimpleStatefulService"), new ServicePartitionKey(1));
+        protected ISimpleStatelessService StatelessService =>
+            ServiceProxy.Create<ISimpleStatelessService>(new Uri("fabric:/ManyFabrics/SimpleStatelessService"), new ServicePartitionKey(1));
+
         /// <summary>
         /// Initializes a new instance of SimpleStateActor
         /// </summary>
@@ -51,6 +58,12 @@ namespace SimpleStateActor
                 return items.Value.Find(it => it.Id == id);
             }
             return null;
+        }
+
+        public async Task<string> GetWebVar(string varName)
+        {
+            var svc = StatelessService;
+            return await svc.GetWebVar(varName);
         }
 
         public async Task<IEnumerable<SimpleItem>> ListItemsAsync(CancellationToken cancellationToken)

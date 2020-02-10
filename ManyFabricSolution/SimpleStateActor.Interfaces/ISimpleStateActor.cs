@@ -22,5 +22,7 @@ namespace SimpleStateActor.Interfaces
         Task<SimpleItem> GetItemAsync(string id);
 
         Task AddItemAsync(SimpleItem item);
+
+        Task<string> GetWebVar(string varName);
     }
 }
