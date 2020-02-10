@@ -10,6 +10,7 @@ using SimpleStateActor.Interfaces;
 using SharedModels;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
 using Microsoft.ServiceFabric.Services.Client;
+using System.Fabric;
 
 namespace SimpleStateActor
 {
@@ -62,8 +63,16 @@ namespace SimpleStateActor
 
         public async Task<string> GetWebVar(string varName)
         {
-            var svc = StatelessService;
-            return await svc.GetWebVar(varName);
+            try
+            {
+                var svc = StatelessService;
+                return await svc.GetWebVar(varName);
+
+            }
+            catch (FabricTransientException ex)
+            {
+                return ex.ToString();
+            }
         }
 
         public async Task<IEnumerable<SimpleItem>> ListItemsAsync(CancellationToken cancellationToken)
