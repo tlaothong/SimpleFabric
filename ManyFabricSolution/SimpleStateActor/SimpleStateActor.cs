@@ -27,7 +27,7 @@ namespace SimpleStateActor
         protected ISimpleStatefulService StatefulService =>
             ServiceProxy.Create<ISimpleStatefulService>(new Uri("fabric:/ManyFabrics/SimpleStatefulService"), new ServicePartitionKey(1));
         protected ISimpleStatelessService StatelessService =>
-            ServiceProxy.Create<ISimpleStatelessService>(new Uri("fabric:/ManyFabrics/SimpleStatelessService"), new ServicePartitionKey(1));
+            ServiceProxy.Create<ISimpleStatelessService>(new Uri("fabric:/ManyFabrics/SimpleStatelessService"));
 
         /// <summary>
         /// Initializes a new instance of SimpleStateActor

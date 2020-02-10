@@ -24,8 +24,8 @@ namespace SimpleStatelessService
 
         public Task<string> GetWebVar(string varName)
         {
-            var baseUrl = "http://localhost:8686/";
-            return baseUrl.AppendPathSegment(new { varName = varName })
+            var baseUrl = $"http://localhost:8686/{varName}";
+            return baseUrl
                 .GetStringAsync();
         }
 
