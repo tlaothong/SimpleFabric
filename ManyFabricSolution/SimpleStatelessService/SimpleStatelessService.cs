@@ -22,11 +22,23 @@ namespace SimpleStatelessService
             : base(context)
         { }
 
-        public Task<string> GetWebVar(string varName)
+        public async Task<string> GetWebVar(string varName)
         {
-            var baseUrl = $"http://localhost:8686/{varName}";
-            return baseUrl
-                .GetStringAsync();
+            try
+            {
+                var baseUrl = $"http://localhost:8686/{varName}";
+                return await baseUrl.GetStringAsync();
+            }
+            catch (FlurlHttpTimeoutException)
+            {
+                throw new FabricTransientException();
+            }
+            catch (FlurlHttpException ex)
+            {
+                if (System.Net.HttpStatusCode.ServiceUnavailable == ex.Call.HttpStatus)
+                    throw new FabricTransientException();
+                throw;
+            }
         }
 
         /// <summary>
@@ -37,26 +49,5 @@ namespace SimpleStatelessService
         {
             return this.CreateServiceRemotingInstanceListeners();
         }
-
-        /// <summary>
-        /// This is the main entry point for your service instance.
-        /// </summary>
-        /// <param name="cancellationToken">Canceled when Service Fabric needs to shut down this service instance.</param>
-        protected override async Task RunAsync(CancellationToken cancellationToken)
-        {
-            // TODO: Replace the following sample code with your own logic 
-            //       or remove this RunAsync override if it's not needed in your service.
-
-            long iterations = 0;
-
-            while (true)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                ServiceEventSource.Current.ServiceMessage(this.Context, "Working-{0}", ++iterations);
-
-                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
-            }
-        }
-    }
+                                                                                                                                                                                                                                                                                                                                                                                                        }
 }

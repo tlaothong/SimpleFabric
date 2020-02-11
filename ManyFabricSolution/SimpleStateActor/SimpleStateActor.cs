@@ -63,16 +63,8 @@ namespace SimpleStateActor
 
         public async Task<string> GetWebVar(string varName)
         {
-            try
-            {
-                var svc = StatelessService;
-                return await svc.GetWebVar(varName);
-
-            }
-            catch (FabricTransientException ex)
-            {
-                return ex.ToString();
-            }
+            var svc = StatelessService;
+            return await svc.GetWebVar(varName);
         }
 
         public async Task<IEnumerable<SimpleItem>> ListItemsAsync(CancellationToken cancellationToken)
