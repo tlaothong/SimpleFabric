@@ -17,10 +17,10 @@ namespace WebStateless.Controllers
 {
     public class StateSvcController : Controller
     {
-        private ISimpleStatefulService stateActor;
+        private ISimpleStatefulService stateSvc;
         public StateSvcController()
         {
-            stateActor = ServiceProxy.Create<ISimpleStatefulService>(
+            stateSvc = ServiceProxy.Create<ISimpleStatefulService>(
                 new Uri("fabric:/ManyFabrics/SimpleStatefulService"), new ServicePartitionKey(1));
         }
 
@@ -28,7 +28,7 @@ namespace WebStateless.Controllers
         public async Task<IActionResult> Index()
         {
             //return View(await _context.SimpleItems.ToListAsync());
-            var items = await stateActor.ListItemsAsync();
+            var items = await stateSvc.ListItemsAsync();
             return View(items);
         }
 
@@ -40,7 +40,7 @@ namespace WebStateless.Controllers
                 return NotFound();
             }
 
-            var simpleItem = await stateActor.GetItemAsync(id);
+            var simpleItem = await stateSvc.GetItemAsync(id);
 
             if (simpleItem == null)
             {
@@ -65,15 +65,10 @@ namespace WebStateless.Controllers
         {
             if (ModelState.IsValid)
             {
-                await stateActor.AddItemAsync(simpleItem);
+                await stateSvc.AddItemAsync(simpleItem);
                 return RedirectToAction(nameof(Index));
             }
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(simpleItem);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
+
             return View(simpleItem);
         }
 
@@ -95,26 +90,6 @@ namespace WebStateless.Controllers
                 return NotFound();
             }
 
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        _context.Update(simpleItem);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!SimpleItemExists(simpleItem.Id))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
             return View(simpleItem);
         }
     }
